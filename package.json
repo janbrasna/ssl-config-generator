@@ -6,7 +6,8 @@
   "scripts": {
     "analyze": "NODE_ENV=analyze webpack --config=config/webpack.config.js --display-error-details --progress --colors",
     "build": "NODE_ENV=production webpack --config=config/webpack.config.js --display-error-details --progress --colors",
-    "watch": "NODE_ENV=development webpack --config=config/webpack.config.js --watch --display-error-details --progress --colors"
+    "watch": "NODE_ENV=development webpack --config=config/webpack.config.js --watch --display-error-details --progress --colors",
+    "start": "npm run watch"
   },
   "repository": {
     "type": "git",
