@@ -36,6 +36,12 @@ global
 frontend ft_test
     mode    http
     bind    :443 ssl crt /path/to/<cert+privkey+intermediate>{{#if (minver "1.8.0" form.serverVersion)}} alpn h2,http/1.1{{/if}}
+{{#if form.ocsp}}
+    {{#if (minver "2.8.0" form.serverVersion)}}
+    # OCSP stapling can be enabled only in crt-list by adding [ocsp-update on] to each certificate line
+    # https://discourse.haproxy.org/t/ocsp-update-haproxy-8-2/9176/6
+    {{/if}}
+{{/if}}
     bind    :80
 {{#if form.hsts}}
     redirect scheme https code 301 if !{ ssl_fc }
