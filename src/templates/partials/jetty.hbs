@@ -18,9 +18,11 @@
 {{#if output.ciphers.length}}
   <Set name="IncludeCipherSuites">
     <Array type="String">
-  {{#each output.cipherSuites}}{{!-- if IncludeCipherSuites is set and TLSv1.3 used, the defaults need to be included --}}
+  {{#if (includes "TLSv1.3" output.protocols)}}{{!-- if IncludeCipherSuites is set and TLSv1.3 used, the defaults need to be included --}}
+    {{#each output.cipherSuites}}
       <Item>{{this}}</Item>
-  {{/each}}
+    {{/each}}
+  {{/if}}
   {{#each output.ciphers}}
       <Item>{{this}}</Item>
   {{/each}}
