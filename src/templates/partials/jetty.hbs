@@ -23,6 +23,14 @@
   {{/each}}
     </Array>
   </Set>
+{{else}}{{!-- IncludeCipherSuites can't be empty, output defaults for TLSv1.3 --}}
+  <Set name="IncludeCipherSuites">
+    <Array type="String">
+  {{#each output.cipherSuites}}
+      <Item>{{this}}</Item>
+  {{/each}}
+    </Array>
+  </Set>
 {{/if}}
 
   <Set name="useCipherSuitesOrder">
