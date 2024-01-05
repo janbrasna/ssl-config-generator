@@ -18,15 +18,10 @@
 {{#if output.ciphers.length}}
   <Set name="IncludeCipherSuites">
     <Array type="String">
-  {{#each output.ciphers}}
+  {{#each output.cipherSuites}}{{!-- if IncludeCipherSuites is set and TLSv1.3 used, the defaults need to be included --}}
       <Item>{{this}}</Item>
   {{/each}}
-    </Array>
-  </Set>
-{{else}}{{!-- IncludeCipherSuites can't be empty, output defaults for TLSv1.3 --}}
-  <Set name="IncludeCipherSuites">
-    <Array type="String">
-  {{#each output.cipherSuites}}
+  {{#each output.ciphers}}
       <Item>{{this}}</Item>
   {{/each}}
     </Array>
