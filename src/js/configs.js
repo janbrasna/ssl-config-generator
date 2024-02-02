@@ -81,7 +81,7 @@ module.exports = {
   },
   haproxy: {
     highlighter: 'nginx',  // TODO: find better
-    latestVersion: '2.1',
+    latestVersion: '2.9',
     name: 'HAProxy',
     tls13: '1.8.0',
   },
