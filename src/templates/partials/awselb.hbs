@@ -16,13 +16,13 @@ Resources:
         - LoadBalancerPort: '443'
           InstancePort: '80'
           PolicyNames:
-            - Mozilla-{{form.config}}-v5-0
+            - Mozilla-{{form.config}}-v{{{replace sstls.version "." "-"}}}
           SSLCertificateId: !Ref SSLCertificateId
           Protocol: HTTPS
       AvailabilityZones:
         Fn::GetAZs: !Ref 'AWS::Region'
       Policies:
-        - PolicyName: Mozilla-{{form.config}}-v5-0
+        - PolicyName: Mozilla-{{form.config}}-v{{{replace sstls.version "." "-"}}}
           PolicyType: SSLNegotiationPolicyType
           Attributes:
 {{#each output.protocols}}
