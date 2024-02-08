@@ -61,8 +61,8 @@ Highlighted items from src/js/state.js for use in templates.  See src/js/state.j
 - `output.header` - description of rendered config (`# {{output.header}}`)
 - `output.link` - URL to rendered config (`# {{{output.link}}}`)
 - `output.protocols` - protocol list (e.g. zero or more of: "TLSv1" "TLSv1.1" "TLSv1.2" "TLSv1.3")
-- `output.ciphers` - cipher list (`{{join output.ciphers ":"}}`)
-- `output.cipherSuites` - cipher suites list
+- `output.ciphers` - TLSv1.2- cipher list (`{{join output.ciphers ":"}}`)
+- `output.cipherSuites` - TLSv1.3+ cipher suites list
 - `output.serverPreferredOrder` - enforce ServerPreference for ordering cipher list (boolean true/false)
 - `output.hstsMaxAge` - max-age (seconds) for Strict-Transport-Security: max-age=... HTTP response header
 - `output.permanentRedirect` - HTTP status code ([ 301 | 308 ]) to use for permanent redirect from http://site to https://site
