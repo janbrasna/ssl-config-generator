@@ -31,21 +31,21 @@ All of the templates are written in [Handlebars.js](https://handlebarsjs.com/), 
 
 - `eq(item, value)` - `true` if `item` equals `value`
 - `includes(item, stringOrArray)` - `true` if `stringOrArray` contains `item`
-- `join(array, joiner)` - split a array into a string based on `joiner`
+- `join(array, joiner)` - joins an array into a string based on `joiner`
   - `{{{join output.ciphers ":"}}}`
 - `last(array)` - returns the last item in the array
-- `minpatchver(minimumver, curver)` - `true` if `curver` is greater than or equal to `minimumver`, and both versions are the same patch version, e.g. `2.2`
+- `minpatchver(minimum, current)` - `true` if `current` is greater than or equal to `minimum`, and both versions are the same patch version, e.g. `2.2`
   - `{{#if (minpatchver "2.4.3" form.serverVersion)}}`
-- `minver(minimumver, curver)` - `true` if `curver` is greater than or equal to `minver`
+- `minver(minimum, current)` - `true` if `current` is greater than or equal to `minimum`
   - `{{#if (minver "1.9.5" form.serverVersion)}}`
-- `replace(string, whattoreplace, replacement)` - replaces whatToReplace with replacement
+- `replace(string, whatToReplace, replacement)` - replaces whatToReplace with replacement
   - `replace(protocol, "TLSv", "TLS ")`
 - `reverse(array)` - reverses the order of an array
   - `{{#each (reverse output.protocols)}`
 - `sameminorver(version, otherVersion)` - returns `true` if `version` and `otherVersion` are of the same minor version, e.g. `2.2`
   - `{{#if (sameminorver "2.4.0" form.serverVersion)}}`
-- `split(string, splitter)` - split a string into an array based on `splitter`
-  - `{{#each (split somearray ":")}}`
+- `split(string, splitter)` - splits a string into an array based on `splitter`
+  - `{{#each (split stringdata ":")}}`
 
 ### Template variables
 
