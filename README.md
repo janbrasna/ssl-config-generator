@@ -39,7 +39,7 @@ All of the templates are written in [Handlebars.js](https://handlebarsjs.com/), 
 - `minver(minimum, current)` - `true` if `current` is greater than or equal to `minimum`
   - `{{#if (minver "1.9.5" form.serverVersion)}}`
 - `replace(string, whatToReplace, replacement)` - replaces whatToReplace with replacement
-  - `replace(protocol, "TLSv", "TLS ")`
+  - `replace(protocol "TLSv" "TLS ")`
 - `reverse(array)` - reverses the order of an array
   - `{{#each (reverse output.protocols)}`
 - `sameminorver(version, otherVersion)` - returns `true` if `version` and `otherVersion` are of the same minor version, e.g. `2.2`
