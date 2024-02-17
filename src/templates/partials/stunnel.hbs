@@ -1,5 +1,5 @@
-# {{output.header}}
-# {{{output.link}}}
+; {{output.header}}
+; {{{output.link}}}
 
 {{#if (minver "1.0.1" form.opensslVersion)}}
     {{#if (minver "5.50" form.serverVersion)}}
@@ -26,7 +26,7 @@ options = NO_SSLv2
 options = NO_SSLv3
 {{/if}}
 
-; Using client mode to proxy gmail imap server
+; Example using client mode to proxy IMAP server
 [imap-proxy-server]
 client = yes
 accept = 127.0.0.1:143
@@ -37,6 +37,7 @@ checkHost = imap.example.com
 {{/if}}
 verifyChain = yes
 
+; Example serving HTTPS for HTTP service
 [https-server]
 accept  = 443
 connect = 80
