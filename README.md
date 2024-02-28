@@ -65,8 +65,6 @@ Highlighted items from src/js/state.js for use in templates.  See src/js/state.j
 - `output.cipherSuites` - TLSv1.3+ cipher suites list
 - `output.serverPreferredOrder` - enforce ServerPreference for ordering cipher list (boolean true/false)
 - `output.hstsMaxAge` - max-age (seconds) for Strict-Transport-Security: max-age=... HTTP response header
-- `output.permanentRedirect` - HTTP status code ([ 301 | 308 ]) to use for permanent redirect from http://site to https://site
-
 - `output.latestVersion` - server latest version
 - `output.usesOpenssl` - server uses openssl (boolean true/false)
 - `output.usesDhe` - server might use Diffie-Hellmann key exchange (boolean true/false)
