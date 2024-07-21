@@ -104,7 +104,7 @@ module.exports = {
   nginx: {
     checked: true,
     highlighter: 'nginx',
-    latestVersion: '1.25.5',
+    latestVersion: '1.26.0',
     name: 'nginx',
     tls13: '1.13.0',
   },
