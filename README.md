@@ -29,22 +29,22 @@ There are two places that need to be updated in order to add support for a new p
 
 All of the templates are written in [Handlebars.js](https://handlebarsjs.com/), and so therefore support all of its standard features. This includes `if`/`else`/`unless` conditionals and `each` loops, for example. In addition, the configuration generator supports the following helpers:
 
-- `eq(item, value)` - `true` if `item` equals `value`
-- `includes(item, stringOrArray)` - `true` if `stringOrArray` contains `item`
-- `join(array, joiner)` - joins an array into a string based on `joiner`
+- `eq(item value)` - `true` if `item` equals `value`
+- `includes(item stringOrArray)` - `true` if `stringOrArray` contains `item`
+- `join(array joiner)` - joins an array into a string based on `joiner`
   - `{{{join output.ciphers ":"}}}`
 - `last(array)` - returns the last item in the array
-- `minpatchver(minimum, current)` - `true` if `current` is greater than or equal to `minimum`, and both versions are the same patch version, e.g. `2.2`
+- `minpatchver(minimum current)` - only `true` if `current` version is greater than or equal to `minimum`, and both are of the same minor version, e.g. `2.4.x` (won't match any higher `2.5.x` or `3.x`)
   - `{{#if (minpatchver "2.4.3" form.serverVersion)}}`
-- `minver(minimum, current)` - `true` if `current` is greater than or equal to `minimum`
+- `minver(minimum current)` - `true` if `current` is greater than or equal to `minimum`
   - `{{#if (minver "1.9.5" form.serverVersion)}}`
-- `replace(string, whatToReplace, replacement)` - replaces whatToReplace with replacement
+- `replace(string old new)` - returns `string` with occurences of `old` substring replaced with `new` when found
   - `replace(protocol "TLSv" "TLS ")`
 - `reverse(array)` - reverses the order of an array
   - `{{#each (reverse output.protocols)}`
-- `sameminorver(version, otherVersion)` - returns `true` if `version` and `otherVersion` are of the same minor version, e.g. `2.2`
+- `sameminorver(version another)` - returns `true` if `version` and `another` are of the same minor version, e.g. `2.4`
   - `{{#if (sameminorver "2.4.0" form.serverVersion)}}`
-- `split(string, splitter)` - splits a string into an array based on `splitter`
+- `split(string splitter)` - splits a string into an array based on `splitter`
   - `{{#each (split stringdata ":")}}`
 
 ### Template variables
