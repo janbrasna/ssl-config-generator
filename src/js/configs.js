@@ -187,7 +187,7 @@ module.exports = {
   },
 tomcat: {
     highlighter: 'xml',
-    latestVersion: '9.0.85',
+    latestVersion: '9.0.96',
     name: 'Tomcat',
     supportsHsts: true,
     supportsOcspStapling: false,
