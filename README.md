@@ -32,16 +32,16 @@ All of the templates are written in [Handlebars.js](https://handlebarsjs.com/), 
 - `eq(item value)` - `true` if `item` equals `value`
 - `includes(item stringOrArray)` - `true` if `stringOrArray` contains `item`
 - `join(array joiner)` - joins an array into a string based on `joiner`
-  - `{{{join output.ciphers ":"}}}`
+  - `{{{join output.ciphers ":"}}}` (NOTE: the "triple-stash" `{{{` brackets are to avoid [HTML escaping](https://handlebarsjs.com/guide/#html-escaping))
 - `last(array)` - returns the last item in the array
 - `minpatchver(minimum current)` - only `true` if `current` version is greater than or equal to `minimum`, and both are of the same minor version, e.g. `2.4.x` (won't match any higher `2.5.x` or `3.x`)
   - `{{#if (minpatchver "2.4.3" form.serverVersion)}}`
 - `minver(minimum current)` - `true` if `current` is greater than or equal to `minimum`
   - `{{#if (minver "1.9.5" form.serverVersion)}}`
 - `replace(string old new)` - returns `string` with occurences of `old` substring replaced with `new` when found
-  - `replace(protocol "TLSv" "TLS ")`
+  - `{{replace protocol "TLSv" "TLS "}}`
 - `reverse(array)` - reverses the order of an array
-  - `{{#each (reverse output.protocols)}`
+  - `{{#each (reverse output.protocols)}}`
 - `sameminorver(version another)` - returns `true` if `version` and `another` are of the same minor version, e.g. `2.4`
   - `{{#if (sameminorver "2.4.0" form.serverVersion)}}`
 - `split(string splitter)` - splits a string into an array based on `splitter`
