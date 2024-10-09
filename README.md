@@ -77,13 +77,16 @@ Highlighted items from src/js/state.js for use in templates.  See src/js/state.j
 
 ## Building
 
-To publish to GitHub Pages, first generate new `docs/` files by running 
+Production builds have different CSP headers, included scripts, and version info added to the output, so to verify that locally
+you can run:
 
 ```bash
 $ npm run build
 ```
 
-Then commit the newly built `docs/` files and push the commit to GitHub.
+to inspect the exact production-level artifacts as used in deployment.
+
+Automation publishes the production site via GitHub Pages, so once your PR merges the changes deploy within a minute or two.
 
 ## Changelog
 
@@ -92,9 +95,9 @@ as represented in the JSON guideline files can be found at [`/src/static/guideli
 
 ## History
 
-The SSL Config Generator was kept in [the `mozilla/server-side-tls` repository](https://github.com/mozilla/server-side-tls/tree/last-revision-before-move)
-prior to mid 2019 at which point it was moved to this dedicated repository. It
-was initially created [at the end of 2014](https://github.com/mozilla/server-side-tls/commit/b201a1191ba38e6f933cd02a4f425f683ffa9be4)
+The SSL Config Generator was originally part of [`mozilla/server-side-tls@v5.0`](https://github.com/mozilla/server-side-tls/tree/12fda41)
+prior to mid-2019 at which point it was moved to this dedicated repository. It
+was initially created [at the end of 2014](https://github.com/mozilla/server-side-tls/commit/b201a11)
 and started out supporting Apache HTTP, Nginx and HAProxy.
 
 ## Authors
