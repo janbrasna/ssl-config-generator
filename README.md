@@ -16,6 +16,8 @@ The [Changelog](/src/static/guidelines/CHANGELOG.md) that tracks the history of 
 
 The project is written in JavaScript, uses Webpack for development and production builds, and most of the templating logic to turn the recommendations into the various server configs is done in Handlebars.
 
+We keep a list of things that would make a great contribution tagged with [*help wanted*](https://github.com/mozilla/ssl-config-generator/labels/help%20wanted), [*good first issue*](https://github.com/mozilla/ssl-config-generator/labels/good%20first%20issue), and [*new software support*](https://github.com/mozilla/ssl-config-generator/labels/new%20software%20support) labels.
+
 If you'd like to see your favorite tool added or compatibility expanded, we're always happy to mentor a PR or receive a bug report to make the configs better for everyone.
 
 Even when you don't feel comfortable contributing actual templates, posting some nice verified configs or compatibility hints is equally welcome! 💝
