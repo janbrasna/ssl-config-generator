@@ -99,7 +99,7 @@ module.exports = {
     highlighter: 'nginx',
     latestVersion: '1.4.67',
     name: 'lighttpd',
-    tls13: '1.4.48'
+    tls13: '1.4.48',
   },
   mysql: {
     highlighter: 'ini',
@@ -125,9 +125,8 @@ module.exports = {
     highlighter: 'apache',
     latestVersion: '12.2.1',
     name: 'Oracle HTTP',
-    supportsHsts: true,
-    supportsOcspStapling: false,  // TODO: fix this, but Oracle's documentation is terrible
-    tls13: noSupportedVersion,
+    supportsOcspStapling: false,  // TODO: needs updating; docs only available to customers:/
+    tls13: noSupportedVersion,    // TODO: needs updating; docs only available to customers:/
   },
   postfix: {
     highlighter: 'nginx',
@@ -153,7 +152,6 @@ module.exports = {
     name: 'ProFTPD',
     showSupports: false,
     supportsHsts: false,
-    supportsOcspStapling: true,
     tls13: '1.3.7',
   },
   redis: {
@@ -164,7 +162,6 @@ module.exports = {
     supportsHsts: false,
     supportsOcspStapling: false,
     tls13: '6.0',
-    usesOpenssl: true,
   },
   squid: {
     highlighter: 'nginx',  // TODO: find better
@@ -179,17 +176,14 @@ module.exports = {
     highlighter: 'ini',
     latestVersion: '5.71',
     name: 'stunnel',
-    showSupports: false,
     supportsHsts: false,
     supportsOcspStapling: false,
     tls13: '5.50',
-    usesOpenssl: true,
   },
-tomcat: {
+  tomcat: {
     highlighter: 'xml',
-    latestVersion: '9.0.30',
+    latestVersion: '9.0.96',
     name: 'Tomcat',
-    supportsHsts: true,
     supportsOcspStapling: false,
     tls13: '8.0.0',
     usesOpenssl: false,
@@ -199,7 +193,6 @@ tomcat: {
     highlighter: 'ini',
     latestVersion: '2.1.2',
     name: 'Traefik',
-    supportsHsts: true,
     supportsOcspStapling: false,  // https://github.com/containous/traefik/issues/212
     tls13: '2.0.0',
     usesOpenssl: false,
