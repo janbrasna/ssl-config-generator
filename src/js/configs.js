@@ -61,6 +61,14 @@ module.exports = {
     supportsOcspStapling: false,
     tls13: '2.3.15',
   },
+  envoy: {
+    highlighter: 'yaml',
+    latestVersion: '1.32.0',
+    name: 'Envoy',
+    supportsHsts: false,
+    supportsOcspStapling: false,  //TODO: viable to set reasonably via boilerplate?
+    tls13: '1.2.3',  //TODO: supported since version…? or boringssl version bump?
+  },
   exim: {
     highlighter: 'nginx',
     latestVersion: '4.93',
