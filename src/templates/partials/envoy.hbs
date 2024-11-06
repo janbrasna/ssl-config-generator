@@ -1,8 +1,8 @@
 # {{output.header}}
 # {{{output.link}}}
-
 static_resources:
   listeners:
+{{#if form.hsts}}
   - address:
       socket_address:
         address: 0.0.0.0
@@ -27,6 +27,7 @@ static_resources:
           http_filters:
           - name: envoy.router
             config: {}
+{{/if}}
   - address:
       socket_address:
         address: 0.0.0.0
@@ -49,16 +50,15 @@ static_resources:
                   prefix: "/service/1"
                 route:
                   cluster: service1
-              - match:
-                  prefix: "/service/2"
-                route:
-                  cluster: service2
               require_tls: ALL
+{{#if form.hsts}}
+            # HSTS ({{output.hstsMaxAge}} seconds)
             response_headers_to_add:
             - header:
                 key: "strict-transport-security"
-                value: "max-age=63072000"
+                value: "max-age={{output.hstsMaxAge}}"
               append: false
+{{/if}}
           http_filters:
           - name: envoy.router
             typed_config: {}
@@ -70,12 +70,12 @@ static_resources:
             #tls_minimum_protocol_version: "TLSv1_3"
             # intermediate
             # tls_minimum_protocol_version: "TLSv1_2"
-            # cipher_suites:
+            # cipher_suites:                                                    ——— TODO:  check tls12 vs tls13 apis?  +ocsp:docs/examples
             # - "[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305]"
-            # - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"
+            # - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"     ——— TODO:  does the sort mean explicit sort preference?
             # - "ECDHE-ECDSA-AES256-GCM-SHA384"
             # - "ECDHE-RSA-AES256-GCM-SHA384"
-            # DHE does not appear to be supported in BoringSSL
+            # DHE does not appear to be supported in BoringSSL   ————— TODO:  emit boringssl ciphers to envoy configs struct to intersect
             # - "DHE-RSA-AES128-GCM-SHA256"
             # - "DHE-RSA-AES256-GCM-SHA384"
             # old
@@ -114,7 +114,7 @@ static_resources:
               filename: "/etc/envoy/certs/server-key.pem"
           validation_context:
             trusted_ca:
-              filename: /etc/envoy/certs/ca.pem
+              filename: "/etc/envoy/certs/ca.pem"
             #verify_subject_alt_name: "example.com"
   clusters:
   - name: service1
@@ -130,20 +130,6 @@ static_resources:
             address:
               socket_address:
                 address: service1
-                port_value: 80
-  - name: service2
-    connect_timeout: 0.25s
-    type: strict_dns
-    lb_policy: round_robin
-    http2_protocol_options: {}
-    load_assignment:
-      cluster_name: service2
-      endpoints:
-      - lb_endpoints:
-        - endpoint:
-            address:
-              socket_address:
-                address: service2
                 port_value: 80
 admin:
   access_log_path: "/dev/null"
