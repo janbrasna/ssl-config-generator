@@ -65,9 +65,11 @@ module.exports = {
     highlighter: 'yaml',
     latestVersion: '1.32.0',
     name: 'Envoy',
-    supportsHsts: false,
+    //supportedCiphers: ['ECDHE-ECDSA-AES128-GCM-SHA256', 'ECDHE-RSA-AES128-GCM-SHA256', 'ECDHE-ECDSA-AES128-SHA256', '…'], TODO intersect
+    supportsHsts: true,
     supportsOcspStapling: false,  //TODO: viable to set reasonably via boilerplate?
     tls13: '1.2.3',  //TODO: supported since version…? or boringssl version bump?
+    //usesOpenssl: false,  TODO: actually boringssl, consider correct pref
   },
   exim: {
     highlighter: 'nginx',
