@@ -52,8 +52,8 @@ static_resources:
                   cluster: service1
               require_tls: ALL
 {{#if form.hsts}}
-            # HSTS ({{output.hstsMaxAge}} seconds)
             response_headers_to_add:
+            # HSTS ({{output.hstsMaxAge}} seconds)
             - header:
                 key: "strict-transport-security"
                 value: "max-age={{output.hstsMaxAge}}"
@@ -66,10 +66,14 @@ static_resources:
         common_tls_context:
           alpn_protocols: h2
           tls_params:
-            # modern (set version and we're done)
-            #tls_minimum_protocol_version: "TLSv1_3"
-            # intermediate
-            # tls_minimum_protocol_version: "TLSv1_2"
+            # {{form.config}} configuration
+            tls_minimum_protocol_version: "{{{replace output.protocols.[0] "TLSv1." "TLSv1_"}}}"
+{{#if output.ciphers.length}}
+            cipher_suites:
+    {{#each output.ciphers}}
+            - "{{this}}"
+    {{/each}}
+{{/if}}
             # cipher_suites:                                                    ——— TODO:  check tls12 vs tls13 apis?  +ocsp:docs/examples
             # - "[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305]"
             # - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"     ——— TODO:  does the sort mean explicit sort preference?
@@ -78,35 +82,6 @@ static_resources:
             # DHE does not appear to be supported in BoringSSL   ————— TODO:  emit boringssl ciphers to envoy configs struct to intersect
             # - "DHE-RSA-AES128-GCM-SHA256"
             # - "DHE-RSA-AES256-GCM-SHA384"
-            # old
-            tls_minimum_protocol_version: "TLSv1_0"
-            cipher_suites:
-            - "[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305]"
-            - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"
-            - "ECDHE-ECDSA-AES256-GCM-SHA384"
-            - "ECDHE-RSA-AES256-GCM-SHA384"
-            # DHE does not appear to be supported in BoringSSL
-            # - "DHE-RSA-AES128-GCM-SHA256"
-            # - "DHE-RSA-AES256-GCM-SHA384"
-            # - "DHE-RSA-CHACHA20-POLY1305"
-            # - "ECDHE-ECDSA-AES128-SHA256"
-            # - "ECDHE-RSA-AES128-SHA256"
-            - "ECDHE-ECDSA-AES128-SHA"
-            - "ECDHE-RSA-AES128-SHA"
-            # - "ECDHE-ECDSA-AES256-SHA384"
-            # - "ECDHE-RSA-AES256-SHA384"
-            - "ECDHE-ECDSA-AES256-SHA"
-            - "ECDHE-RSA-AES256-SHA"
-            # DHE does not appear to be supported in BoringSSL
-            # - "DHE-RSA-AES128-SHA256"
-            # - "DHE-RSA-AES256-SHA256"
-            - "AES128-GCM-SHA256"
-            - "AES256-GCM-SHA384"
-            # - "AES128-SHA256"
-            # - "AES256-SHA256"
-            - "AES128-SHA"
-            - "AES256-SHA"
-            - "DES-CBC3-SHA"
           tls_certificates:
           - certificate_chain:
               filename: "/etc/envoy/certs/server.pem"
