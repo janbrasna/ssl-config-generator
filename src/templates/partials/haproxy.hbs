@@ -20,7 +20,7 @@ global
     # {{output.dhCommand}} > /path/to/dhparam
     ssl-dh-param-file /path/to/dhparam
     {{else}}
-    tune.ssl.default-dh-param 2048
+    tune.ssl.default-dh-param {{output.dhParamSize}}
     {{/if}}
 {{/if}}
 
