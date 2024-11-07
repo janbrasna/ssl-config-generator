@@ -27,22 +27,23 @@
       Strict-Transport-Security = "max-age={{output.hstsMaxAge}}"
 {{/if}}
 
-# due to Go limitations, it is highly recommended that you use an ECDSA
-# certificate, or you may experience compatibility issues
+{{#if (includes "intermediate" form.config)}}
+# Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+{{/if}}
 [[tls.certificates]]
   certFile = "/path/to/signed_cert_plus_intermediates"
   keyFile = "/path/to/private_key"
 
 [tls.options]
   [tls.options.{{form.config}}]
-    minVersion = "{{{replace output.protocols.[0] "TLSv1." "VersionTLS1"}}}"
+    minVersion = "{{#if (eq output.protocols.[0] "TLSv1")}}VersionTLS10{{else}}{{{replace output.protocols.[0] "TLSv1." "VersionTLS1"}}}{{/if}}"
     {{#if output.ciphers.length}}
     cipherSuites = [
     {{#each output.ciphers}}
       "{{this}}"{{#unless @last}},{{/unless}}
     {{/each}}
     ]
-      {{/if}}
+    {{/if}}
 {{else}}
 {{! traefik 1.x configuration style }}
 defaultEntryPoints = ["http", "https"]
@@ -58,11 +59,7 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
   address = ":443"
     [entryPoints.https.tls]
-      {{#if (eq output.protocols.[0] "TLSv1")}}
-      minVersion = "VersionTLS10"
-      {{else}}
-      minVersion = "{{{replace output.protocols.[0] "TLSv1." "VersionTLS1"}}}"
-      {{/if}}
+      minVersion = "{{#if (eq output.protocols.[0] "TLSv1")}}VersionTLS10{{else}}{{{replace output.protocols.[0] "TLSv1." "VersionTLS1"}}}{{/if}}"
       {{#if output.ciphers.length}}
       cipherSuites = [
       {{#each output.ciphers}}
@@ -71,8 +68,9 @@ defaultEntryPoints = ["http", "https"]
       ]
       {{/if}}
 
-      # due to Go limitations, it is highly recommended that you use an ECDSA
-      # certificate, or you may experience compatibility issues
+      {{#if (includes "intermediate" form.config)}}
+      # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+      {{/if}}
       [[entryPoints.https.tls.certificates]]
       certFile = "/path/to/signed_cert_plus_intermediates"
       keyFile = "/path/to/private_key"
