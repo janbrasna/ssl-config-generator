@@ -69,7 +69,7 @@ module.exports = {
     supportsHsts: true,
     supportsOcspStapling: false,  //TODO: viable to set reasonably via boilerplate?
     tls13: '1.2.3',  //TODO: supported since version…? or boringssl version bump?
-    //usesOpenssl: false,  TODO: actually boringssl, consider correct pref
+    usesOpenssl: false, // uses BoringSSL
   },
   exim: {
     highlighter: 'nginx',
