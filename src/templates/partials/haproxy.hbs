@@ -1,26 +1,17 @@
 {{#if (minver "1.5.0" form.serverVersion)}}
-{{!-- Only version 1.5.0 and newer support TLS --}}
+{{!-- Only versions 1.5.0 and newer support TLS --}}
 # {{output.header}}
 # {{{output.link}}}
 global
     # {{form.config}} configuration
+    # frontend:
 {{#if output.ciphers.length}}
     ssl-default-bind-ciphers {{{join output.ciphers ":"}}}
 {{/if}}
-{{#if (minver "1.9.0" form.serverVersion)}}
-    {{#if (minver "1.1.1" form.opensslVersion)}}
-    ssl-default-bind-ciphersuites {{{join output.cipherSuites ":"}}}
-    {{/if}}
-{{/if}}
     ssl-default-bind-options no-tls-tickets{{#if (minver "1.8.0" form.serverVersion)}}{{#unless output.serverPreferredOrder}} prefer-client-ciphers{{/unless}}{{/if}}{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}}
-
+    # backend:
 {{#if output.ciphers.length}}
     ssl-default-server-ciphers {{{join output.ciphers ":"}}}
-{{/if}}
-{{#if (minver "1.9.0" form.serverVersion)}}
-    {{#if (minver "1.1.1" form.opensslVersion)}}
-    ssl-default-server-ciphersuites {{{join output.cipherSuites ":"}}}
-    {{/if}}
 {{/if}}
     ssl-default-server-options no-tls-tickets{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}}
 {{#if output.usesDhe}}
