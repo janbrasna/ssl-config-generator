@@ -67,7 +67,7 @@ static_resources:
           alpn_protocols: h2
           tls_params:
             # {{form.config}} configuration
-            tls_minimum_protocol_version: "{{{replace output.protocols.[0] "TLSv1." "TLSv1_"}}}"
+            tls_minimum_protocol_version: "{{#if (eq output.protocols.[0] "TLSv1")}}TLSv1_0{{else}}{{{replace output.protocols.[0] "TLSv1." "TLSv1_"}}}{{/if}}"
 {{#if output.ciphers.length}}
             cipher_suites:
     {{#each output.ciphers}}
