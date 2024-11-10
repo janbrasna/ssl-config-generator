@@ -15,4 +15,4 @@ Issue #
 
 ## Testing
 
-<!-- Mention any steps, key actions or version breakpoints to verify, ideally aligned with testing you've done yourself to verify the PR changes has the expected effect. -->
+<!-- Mention any steps, key actions or version breakpoints to follow, ideally aligned with testing you've done yourself to verify the PR changes have the expected effect. -->
