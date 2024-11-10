@@ -16,13 +16,13 @@ Resources:
         - LoadBalancerPort: '443'
           InstancePort: '80'
           PolicyNames:
-            - Mozilla-{{form.config}}-v5-0
+            - Mozilla-{{form.config}}-v5-7
           SSLCertificateId: !Ref SSLCertificateId
           Protocol: HTTPS
       AvailabilityZones:
         Fn::GetAZs: !Ref 'AWS::Region'
       Policies:
-        - PolicyName: Mozilla-{{form.config}}-v5-0
+        - PolicyName: Mozilla-{{form.config}}-v5-7
           PolicyType: SSLNegotiationPolicyType
           Attributes:
 {{#each output.protocols}}
@@ -33,7 +33,7 @@ Resources:
               Value: {{#if output.serverPreferredOrder}}true{{else}}false{{/if}}
 {{#each output.ciphers}}
             - Name: {{this}}
-              Value: true
+              Value: true{{#if output.usesDhe}}  # NB: ELB only supports 1024-bit FFDH, comment out DHEs for dhParamSize>1024?{{/if}}
 {{/each}}
 Outputs:
   ELBURL:
