@@ -1,41 +1,38 @@
+{{#if (minver "1.5.0" form.serverVersion)}}
+{{!-- Only versions 1.5.0 and newer support TLS --}}
 # {{output.header}}
 # {{{output.link}}}
-{{!Only version 1.5.0 and newer support TLS}}
-{{#if (minver "1.5.0" form.serverVersion)}}
 global
     # {{form.config}} configuration
+    # frontend:
 {{#if output.ciphers.length}}
     ssl-default-bind-ciphers {{{join output.ciphers ":"}}}
 {{/if}}
-{{#if (minver "1.9.0" form.serverVersion)}}
-    {{#if (minver "1.1.1" form.opensslVersion)}}
-    ssl-default-bind-ciphersuites {{{join output.cipherSuites ":"}}}
-    {{/if}}
-{{/if}}
-    ssl-default-bind-options{{#if (minver "1.8.0" form.serverVersion)}}{{#unless output.serverPreferredOrder}} prefer-client-ciphers{{/unless}}{{/if}}{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}} no-tls-tickets
-
+    ssl-default-bind-options no-tls-tickets{{#if (minver "1.8.0" form.serverVersion)}}{{#unless output.serverPreferredOrder}} prefer-client-ciphers{{/unless}}{{/if}}{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}}
+    # backend:
 {{#if output.ciphers.length}}
     ssl-default-server-ciphers {{{join output.ciphers ":"}}}
 {{/if}}
-{{#if (minver "1.9.0" form.serverVersion)}}
-    {{#if (minver "1.1.1" form.opensslVersion)}}
-    ssl-default-server-ciphersuites {{{join output.cipherSuites ":"}}}
-    {{/if}}
-{{/if}}
-    ssl-default-server-options{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}} no-tls-tickets
+    ssl-default-server-options no-tls-tickets{{#unless (includes "SSLv3" output.protocols)}} no-sslv3{{/unless}}{{#unless (includes "TLSv1" output.protocols)}} no-tlsv10{{/unless}}{{#unless (includes "TLSv1.1" output.protocols)}} no-tlsv11{{/unless}}{{#unless (includes "TLSv1.2" output.protocols)}} no-tlsv12{{/unless}}
 {{#if output.usesDhe}}
 
     {{#if (minver "1.6.0" form.serverVersion)}}
     # {{output.dhCommand}} > /path/to/dhparam
     ssl-dh-param-file /path/to/dhparam
     {{else}}
-    tune.ssl.default-dh-param 2048
+    tune.ssl.default-dh-param {{output.dhParamSize}}
     {{/if}}
 {{/if}}
 
 frontend ft_test
     mode    http
     bind    :443 ssl crt /path/to/<cert+privkey+intermediate>{{#if (minver "1.8.0" form.serverVersion)}} alpn h2,http/1.1{{/if}}
+{{#if form.ocsp}}
+    {{#if (minver "2.8.0" form.serverVersion)}}
+    # OCSP stapling can be enabled only in crt-list by adding [ocsp-update on] to each certificate line
+    # https://discourse.haproxy.org/t/ocsp-update-haproxy-8-2/9176/6
+    {{/if}}
+{{/if}}
     bind    :80
 {{#if form.hsts}}
     redirect scheme https code 301 if !{ ssl_fc }
@@ -44,5 +41,5 @@ frontend ft_test
     http-response set-header Strict-Transport-Security max-age={{output.hstsMaxAge}}
 {{/if}}
 {{else}}
-Sorry, TLS is not supported in this version of HAProxy.
+# Unfortunately, TLS is not supported in this version of HAProxy.
 {{/if}}
