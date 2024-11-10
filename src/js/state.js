@@ -38,12 +38,12 @@ export default async function () {
   let ciphers = configs[server].cipherFormat ? ssc.ciphers[configs[server].cipherFormat] : ssc.ciphers.openssl;
   if (configs[server].supportedCiphers) {
     ciphers = ciphers.filter(suite => configs[server].supportedCiphers.indexOf(suite) !== -1);
-  } else {
-    ciphers = ciphers;
   }
   if (protocols.includes('TLSv1.1') && configs[server].usesOpenssl !== false && minver('3.0.0', form['openssl'].value)) {
     // to allow "old" TLSv1-1.1 with OpenSSL 3.x we add SECLEVEL=0 via cipher string
     if (!ciphers.includes('@SECLEVEL=0') && ciphers.length) ciphers.unshift('@SECLEVEL=0');
+  } else {
+    if (ciphers[0] === '@SECLEVEL=0') ciphers.shift();
   }
 
   const state = {
