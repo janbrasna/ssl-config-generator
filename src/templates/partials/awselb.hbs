@@ -33,7 +33,7 @@ Resources:
               Value: {{#if output.serverPreferredOrder}}true{{else}}false{{/if}}
 {{#each output.ciphers}}
             - Name: {{this}}
-              Value: true{{#if output.usesDhe}}  # NB: ELB only supports 1024-bit FFDH, comment out DHEs for dhParamSize>1024?{{/if}}
+              Value: {{#if (and (includes "DHE" this) (when (includes "ECDHE" this) "!=" true) (when @root.output.dhParamSize ">" 1024))}}false  # ELB only supports weak DH (1024-bit), use an ECDSA cert for IE11/Win7 compatibility{{else}}true{{/if}}
 {{/each}}
 Outputs:
   ELBURL:
