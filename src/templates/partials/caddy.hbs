@@ -1,28 +1,25 @@
+{{#if (minver "2.0.0" form.serverVersion)}}
+{{!-- We no longer suport Caddy 1 syntax --}}
 # {{output.header}}
 # {{{output.link}}}
-{{#unless (minver "2.0.0" form.serverVersion)}}
-# note that Caddy version 1 reached end-of-life > 4 years ago back in 2020
-{{/unless}}
+# Note: Caddy configures safe TLS settings by default
 
 # replace example.com with your domain name
 example.com {
 
   tls {
 {{#if output.ciphers.length}}
-  {{#if (includes "TLSv1.2" output.protocols)}}
+  {{#unless (includes "TLSv1.1" output.protocols)}}
     # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
-
-  {{/if}}
-    # Note: Caddy automatically configures safe TLS settings,
-    # so 'ciphers' may safely be commented out to use Caddy defaults.
+  {{/unless}}
     ciphers {{{join output.ciphers " "}}}
 {{/if}}
 {{#if (includes "TLSv1.2" output.protocols)}}
   {{#if (includes "TLSv1.1" output.protocols)}}
-    # Note: Caddy supports only TLSv1.2 and later
+    # Warning: Caddy can't support TLSv1 or TLSv1.1 to match {{form.config}} exactly
   {{/if}}
     #protocols tls1.2 tls1.3
-{{else if (includes "TLSv1.3" output.protocols)}}
+{{else}}
     protocols tls1.3
 {{/if}}
   }
@@ -33,3 +30,6 @@ example.com {
 {{/if}}
 
 }
+{{else}}
+# Unfortunately, we no longer support generating configs for Caddy 1.
+{{/if}}
