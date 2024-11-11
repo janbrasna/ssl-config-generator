@@ -1,5 +1,5 @@
 {{#if (minver "2.0.0" form.serverVersion)}}
-{{!-- We no longer suport Caddy 1 syntax --}}
+{{!-- We no longer suport Caddy 1 configs --}}
 # {{output.header}}
 # {{{output.link}}}
 # Note: Caddy configures safe TLS settings by default
@@ -16,7 +16,9 @@ example.com {
 {{/if}}
 {{#if (includes "TLSv1.2" output.protocols)}}
   {{#if (includes "TLSv1.1" output.protocols)}}
-    # Warning: Caddy can't support TLSv1 or TLSv1.1 to match {{form.config}} exactly
+    # Warning: Caddy no longer supports TLSv1 or TLSv1.1 to match '{{form.config}}' config exactly
+  {{else}}
+    # These are Caddy defaults and don't need specifying
   {{/if}}
     #protocols tls1.2 tls1.3
 {{else}}
