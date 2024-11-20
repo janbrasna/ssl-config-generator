@@ -27,7 +27,7 @@
       Strict-Transport-Security = "max-age={{output.hstsMaxAge}}"
 {{/if}}
 
-{{#if (includes "intermediate" form.config)}}
+{{#if (includes "IE 11 on Windows 7" output.oldestClients)}}
 # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
 {{/if}}
 [[tls.certificates]]
@@ -68,7 +68,7 @@ defaultEntryPoints = ["http", "https"]
       ]
       {{/if}}
 
-      {{#if (includes "intermediate" form.config)}}
+      {{#if (includes "IE 11 on Windows 7" output.oldestClients)}}
       # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
       {{/if}}
       [[entryPoints.https.tls.certificates]]
