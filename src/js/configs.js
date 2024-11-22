@@ -65,11 +65,11 @@ module.exports = {
     highlighter: 'yaml',
     latestVersion: '1.32.0',
     name: 'Envoy',
-    //supportedCiphers: ['ECDHE-ECDSA-AES128-GCM-SHA256', 'ECDHE-RSA-AES128-GCM-SHA256', 'ECDHE-ECDSA-AES128-SHA256', '…'], TODO intersect
+    supportedCiphers: ['ECDHE-ECDSA-AES128-SHA', 'ECDHE-ECDSA-AES256-SHA', 'ECDHE-RSA-AES128-SHA', 'ECDHE-RSA-AES256-SHA', 'ECDHE-RSA-AES128-SHA256', 'ECDHE-ECDSA-AES128-GCM-SHA256', 'ECDHE-ECDSA-AES256-GCM-SHA384', 'ECDHE-RSA-AES128-GCM-SHA256', 'ECDHE-RSA-AES256-GCM-SHA384', 'ECDHE-PSK-AES128-CBC-SHA', 'ECDHE-PSK-AES256-CBC-SHA', 'ECDHE-RSA-CHACHA20-POLY1305', 'ECDHE-ECDSA-CHACHA20-POLY1305', 'ECDHE-PSK-CHACHA20-POLY1305', 'DES-CBC3-SHA', 'AES128-SHA', 'AES256-SHA', 'PSK-AES128-CBC-SHA', 'PSK-AES256-CBC-SHA', 'AES128-GCM-SHA256', 'AES256-GCM-SHA384'],
     supportsHsts: true,
     supportsOcspStapling: false,  //TODO: viable to set reasonably via boilerplate?
-    tls13: '1.2.3',  //TODO: supported since version…? or boringssl version bump?
-    usesOpenssl: false, // uses BoringSSL
+    tls13: '1.5.0',
+    usesOpenssl: false,  // BoringSSL only since 1.3.0
   },
   exim: {
     highlighter: 'nginx',
