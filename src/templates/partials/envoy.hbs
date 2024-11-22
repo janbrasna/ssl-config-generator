@@ -74,14 +74,13 @@ static_resources:
             - "{{this}}"
     {{/each}}
 {{/if}}
-            # cipher_suites:                                                    ——— TODO:  check tls12 vs tls13 apis?  +ocsp:docs/examples
-            # - "[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305]"
-            # - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"     ——— TODO:  does the sort mean explicit sort preference?
-            # - "ECDHE-ECDSA-AES256-GCM-SHA384"
-            # - "ECDHE-RSA-AES256-GCM-SHA384"
-            # DHE does not appear to be supported in BoringSSL   ————— TODO:  emit boringssl ciphers to envoy configs struct to intersect
-            # - "DHE-RSA-AES128-GCM-SHA256"
-            # - "DHE-RSA-AES256-GCM-SHA384"
+            # cipher_suites:
+            # - "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]"     ——— TODO:  does the sort mean explicit order/preference?
+            # - "ECDHE-ECDSA-AES256-GCM-SHA384"                                 ——— TODO: ?  +ocsp:docs/examples
+            # - "ECDHE-RSA-AES256-GCM-SHA384"                                   ——— TODO: ? verify? ++ t.ly/KR2Gj
+{{#if (includes "IE 11 on Windows 7" output.oldestClients)}}
+            # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+{{/if}}
           tls_certificates:
           - certificate_chain:
               filename: "/etc/envoy/certs/server.pem"
